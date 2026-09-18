@@ -44,7 +44,7 @@ function SiswaDashboard() {
 
   // ================= 4. STATE CHATBOT AI =================
   const [chatHistory, setChatHistory] = useState([
-    { role: 'ai', text: 'Halo! Saya FarEd AI. Ada yang bisa saya bantu untuk pelajaranmu hari ini?' }
+    { role: 'ai', text: 'Halo! Saya Taskmate AI. Ada yang bisa saya bantu untuk pelajaranmu hari ini?' }
   ]);
   const [chatInput, setChatInput] = useState('');
   const [isChatLoading, setIsChatLoading] = useState(false);
@@ -96,7 +96,7 @@ function SiswaDashboard() {
   const handleLogout = async () => {
     // SweetAlert Konfirmasi Keluar
     const result = await Swal.fire({
-      title: 'Keluar dari FarEd?',
+      title: 'Keluar dari Taskmate?',
       text: "Anda harus login kembali untuk masuk.",
       icon: 'question',
       showCancelButton: true,
@@ -134,7 +134,7 @@ const handleSaveProfile = async (e) => {
       text: "Apakah kamu yakin ingin mengubah data profilmu?",
       icon: 'question',
       showCancelButton: true,
-      confirmButtonColor: '#5D4289', // Ungu FarEd
+      confirmButtonColor: '#087E8B',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Ya, Simpan!',
       cancelButtonText: 'Batal',
@@ -406,8 +406,8 @@ const handleSaveTask = async (e) => {
       {/* HEADER */}
       <div className="flex-none px-8 py-6 flex justify-between items-center bg-white shadow-sm z-10 relative">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-[#5D4289] rounded-xl flex items-center justify-center font-bold text-white shadow-md">F</div>
-          <span className="font-extrabold text-2xl tracking-tight text-[#3C2366]">FarEd.</span>
+          <img src="/001_UNIVERSITAS%20TRUNODJOYO%20MADURA.png" alt="Universitas Trunojoyo Madura" className="w-10 h-10 object-contain rounded-xl bg-white shadow-md" />
+          <span className="font-extrabold text-2xl tracking-tight text-[#083B4C]">Taskmate</span>
         </div>
         <div className="flex items-center gap-4 relative">
           <div className="hidden sm:block text-sm font-semibold text-gray-500">{new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long' })}</div>
@@ -713,7 +713,7 @@ const handleSaveTask = async (e) => {
 
               <div className="flex-none pt-8 pb-2 flex flex-col items-center justify-center z-10 bg-gradient-to-b from-white to-transparent">
                 <svg className="w-6 h-6 text-[#5D4289] mb-2" viewBox="0 0 24 24" fill="currentColor"><path d="M11.644 1.838a.5.5 0 01.712 0l1.294 1.293a6.5 6.5 0 004.219 1.849l1.837.262a.5.5 0 010 .98l-1.837.262a6.5 6.5 0 00-4.219 1.85l-1.294 1.292a.5.5 0 01-.712 0l-1.294-1.292a6.5 6.5 0 00-4.219-1.85l-1.837-.262a.5.5 0 010-.98l1.837-.262a6.5 6.5 0 004.219-1.85l1.294-1.293zm5.72 13.064a.5.5 0 01.712 0l.647.647a4.5 4.5 0 002.92.128l.918-.131a.5.5 0 010 .98l-.918.132a4.5 4.5 0 00-2.92.128l-.647.647a.5.5 0 01-.712 0l-.647-.647a4.5 4.5 0 00-2.92-.128l-.918-.132a.5.5 0 010-.98l.918.131a4.5 4.5 0 002.92-.128l.647-.647z" /></svg>
-                <section className="text-lg font-bold text-[#3C2366]">Ask FarEd AI</section>
+                <section className="text-lg font-bold text-[#083B4C]">Ask Taskmate AI</section>
               </div>
 
               <div className="flex-1 overflow-y-auto px-4 sm:px-10 lg:px-24 py-4 space-y-5 no-scrollbar z-10 flex flex-col">

@@ -37,7 +37,7 @@ const handleLogin = async (e) => {
         icon: 'success',
         timer: 1500, // Hilang otomatis dalam 1.5 detik
         showConfirmButton: false,
-        backdrop: `rgba(60, 35, 102, 0.4)` // Warna backdrop ungu FarEd transparan
+        backdrop: `rgba(8, 92, 117, 0.4)`
       });
 
       // Arahkan ke halaman sesuai Role
@@ -57,12 +57,10 @@ const handleLogin = async (e) => {
       {/* BAGIAN KIRI: Form Login */}
       <div className="w-full lg:w-1/2 h-full flex flex-col justify-center px-8 sm:px-16 md:px-24 xl:px-32 bg-white relative">
         
-        {/* Logo EduVibe */}
+        {/* Identitas Taskmate */}
         <div className="absolute top-8 left-8 sm:left-16 md:left-24 xl:left-32 flex items-center gap-2">
-          <div className="w-8 h-8 bg-[#3C2366] rounded flex items-center justify-center font-bold text-white text-sm">
-            F
-          </div>
-          <span className="font-bold text-xl text-black tracking-tight">FarEd</span>
+          <img src="/001_UNIVERSITAS%20TRUNODJOYO%20MADURA.png" alt="Universitas Trunojoyo Madura" className="w-9 h-9 object-contain rounded bg-white" />
+          <span className="font-bold text-xl text-[#083B4C] tracking-tight">Taskmate</span>
         </div>
 
         {/* Kontainer Utama Form */}
@@ -126,7 +124,7 @@ const handleLogin = async (e) => {
 
       {/* BAGIAN KANAN: Gambar Ilustrasi */}
       <div className="hidden lg:block lg:w-1/2 h-full bg-[#3C2366]">
-        <img src="/bg-login.png" alt="Decoration" className="w-full h-full object-cover"/>
+        <img src="/image.png" alt="Decoration" className="w-full h-full object-cover"/>
       </div>
       
     </div>

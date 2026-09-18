@@ -9,9 +9,9 @@ body {
   --bg: #fff;
   --border: #e5e4e7;
   --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
+  --accent: #087e8b;
+  --accent-bg: rgba(8, 126, 139, 0.1);
+  --accent-border: rgba(8, 126, 139, 0.5);
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
@@ -34,6 +34,21 @@ body {
     font-size: 16px;
   }
 }
+
+[class~="bg-[#5D4289]"] { background-color: #087e8b !important; }
+[class~="hover:bg-[#3C2366]"]:hover { background-color: #083b4c !important; }
+[class~="hover:bg-[#432A6B]"]:hover { background-color: #065b67 !important; }
+[class~="bg-[#3C2366]"] { background-color: #083b4c !important; }
+[class~="text-[#3C2366]"] { color: #083b4c !important; }
+[class~="text-[#5D4289]"] { color: #087e8b !important; }
+[class~="border-[#5D4289]"] { border-color: #087e8b !important; }
+[class~="hover:border-[#5D4289]"]:hover { border-color: #087e8b !important; }
+[class~="bg-[#F3E8FF]"] { background-color: #fff7b8 !important; }
+[class~="border-[#D8B4FE]"] { border-color: #e4c400 !important; }
+[class~="text-purple-900"] { color: #083b4c !important; }
+[class~="bg-purple-50"] { background-color: #fffbe0 !important; }
+[class~="hover:bg-purple-100"]:hover { background-color: #fff4a3 !important; }
+[class~="bg-purple-200"] { background-color: #ffec70 !important; }
 
 @media (prefers-color-scheme: dark) {
   :root {

@@ -50,11 +50,13 @@ function GuruDashboard() {
   // ================= 4. STATE KALENDER =================
   const today = new Date();
   const currentDayIndex = today.getDay() === 0 ? 7 : today.getDay();
+  const dayNames = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+  const currentDayName = dayNames[currentDayIndex - 1];
   const [selectedDayIndex, setSelectedDayIndex] = useState(currentDayIndex);
 
   // ================= 5. STATE CHATBOT AI =================
   const [chatHistory, setChatHistory] = useState([
-    { role: 'ai', text: 'Halo Bapak/Ibu Guru! Saya FarEd AI. Saya siap membantu Anda menyusun materi, membuat kuis, atau mengevaluasi tugas siswa hari ini.' }
+    { role: 'ai', text: 'Halo Bapak/Ibu Guru! Saya Taskmate AI. Saya siap membantu Anda menyusun materi, membuat kuis, atau mengevaluasi tugas siswa hari ini.' }
   ]);
   const [chatInput, setChatInput] = useState('');
   const [isChatLoading, setIsChatLoading] = useState(false);
@@ -106,7 +108,7 @@ function GuruDashboard() {
   const handleLogout = async () => {
     // SweetAlert Konfirmasi Logout
     const result = await Swal.fire({
-      title: 'Keluar dari FarEd?', text: "Anda harus login kembali untuk masuk.", icon: 'question',
+      title: 'Keluar dari Taskmate?', text: "Anda harus login kembali untuk masuk.", icon: 'question',
       showCancelButton: true, confirmButtonColor: '#d33', cancelButtonColor: '#6B7280', confirmButtonText: 'Ya, Keluar', cancelButtonText: 'Batal', backdrop: `rgba(0,0,0,0.5)`
     });
 
@@ -329,10 +331,8 @@ const handleSavePassword = async (e) => {
       {/* HEADER */}
       <div className="flex-none px-8 py-6 flex justify-between items-center bg-white shadow-sm z-10 relative">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-[#5D4289] rounded-xl flex items-center justify-center font-bold text-white shadow-md">
-            F
-          </div>
-          <span className="font-extrabold text-2xl tracking-tight text-[#3C2366]">FarEd.</span>
+          <img src="/001_UNIVERSITAS%20TRUNODJOYO%20MADURA.png" alt="Universitas Trunojoyo Madura" className="w-10 h-10 object-contain rounded-xl bg-white shadow-md" />
+          <span className="font-extrabold text-2xl tracking-tight text-[#083B4C]">Taskmate</span>
         </div>
         <div className="flex items-center gap-4 relative">
           <div className="hidden sm:block text-sm font-semibold text-gray-500">
@@ -407,9 +407,9 @@ const handleSavePassword = async (e) => {
                   <div className="bg-white rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col">
                     <section className="text-xl font-bold text-gray-800 mb-6">Jadwal Hari Ini</section>
                     <div className="space-y-4">
-                      {teacherSchedule.filter(schedule => schedule.hari === ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'][currentDayIndex - 1]).length > 0 ? (
+                      {teacherSchedule.filter(schedule => schedule.hari === currentDayName).length > 0 ? (
                         teacherSchedule
-                          .filter(schedule => schedule.hari === ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'][currentDayIndex - 1])
+                          .filter(schedule => schedule.hari === currentDayName)
                           .map(schedule => (
                             <div key={schedule.id} className="flex gap-4 items-center p-3 hover:bg-gray-50 rounded-xl transition">
                               <div className="font-bold text-[#5D4289]">{schedule.jam_mulai}</div><div className="w-1 h-10 bg-amber-400 rounded-full"></div>
@@ -508,15 +508,15 @@ const handleSavePassword = async (e) => {
 
           {/* ================= TAB: KALENDER & JADWAL ================= */}
           {activeTab === 'todo' && (() => {
-            const daysName = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+            const daysName = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+            const daysShortName = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
             const calendarDates = Array.from({length: 7}).map((_, i) => {
               const d = new Date();
               const diff = today.getDate() - currentDayIndex + (i + 1);
               d.setDate(diff);
               const dIndex = d.getDay() === 0 ? 7 : d.getDay();
-              return { day: daysName[i], date: d.getDate(), active: dIndex === selectedDayIndex, index: dIndex };
+              return { day: daysShortName[i], date: d.getDate(), active: dIndex === selectedDayIndex, index: dIndex };
             });
-            const hoursList = ['07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00'];
             const selectedDayName = daysName[selectedDayIndex - 1];
             const schedules = teacherSchedule
               .filter(schedule => schedule.hari === selectedDayName)
@@ -529,9 +529,13 @@ const handleSavePassword = async (e) => {
                   subtitle: `${schedule.kelas}${schedule.ruangan ? ` • ${schedule.ruangan}` : ''}`,
                   start: schedule.jam_mulai,
                   duration: Math.max((endMinutes - startMinutes) / 60, 1),
+                  startMinutes,
                   color: 'bg-[#F3E8FF] border-[#D8B4FE] text-[#3C2366]'
                 };
               });
+            const firstHour = Math.min(7, ...schedules.map(schedule => Math.floor(schedule.startMinutes / 60)));
+            const lastHour = Math.max(15, ...schedules.map(schedule => Math.ceil((schedule.startMinutes + schedule.duration * 60) / 60)));
+            const hoursList = Array.from({ length: lastHour - firstHour + 1 }, (_, index) => `${String(firstHour + index).padStart(2, '0')}:00`);
 
             return (
               <div className="animate-fade-in bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-[calc(100vh-160px)] min-h-[500px] flex flex-col border border-gray-100 p-6 sm:p-8">
@@ -550,10 +554,10 @@ const handleSavePassword = async (e) => {
                   <div className="relative">
                     {hoursList.map((hour) => (<div key={hour} className="flex h-[100px] w-full relative"><div className="w-14 text-xs font-bold text-gray-400 -mt-2 bg-white pr-2">{hour}</div><div className="flex-1 border-t-2 border-dashed border-gray-200"></div></div>))}
                     {schedules.length > 0 ? schedules.map(schedule => {
-                        const topPos = ((parseInt(schedule.start.split(':')[0]) - 7)) * 100;
-                        const heightPx = schedule.duration * 100;
+                        const topPos = ((schedule.startMinutes - firstHour * 60) / 60) * 100;
+                        const heightPx = Math.max(schedule.duration * 100 - 10, 40);
                         return (
-                          <div key={schedule.id} className={`absolute left-14 right-2 sm:right-6 rounded-2xl p-5 shadow-sm border flex flex-col hover:shadow-md transition-all cursor-pointer ${schedule.color}`} style={{ top: `${topPos}px`, height: `${heightPx - 10}px` }}>
+                          <div key={schedule.id} className={`absolute left-14 right-2 sm:right-6 rounded-2xl p-5 shadow-sm border flex flex-col hover:shadow-md transition-all cursor-pointer ${schedule.color}`} style={{ top: `${topPos}px`, height: `${heightPx}px` }}>
                             <h4 className="font-bold text-base leading-tight">{schedule.title}</h4><p className="text-xs opacity-80 mt-1">{schedule.subtitle}</p>
                           </div>
                         )
@@ -574,7 +578,7 @@ const handleSavePassword = async (e) => {
               </div>
               <div className="flex-none pt-8 pb-2 flex flex-col items-center justify-center z-10 bg-gradient-to-b from-white to-transparent">
                 <svg className="w-6 h-6 text-[#5D4289] mb-2" viewBox="0 0 24 24" fill="currentColor"><path d="M11.644 1.838a.5.5 0 01.712 0l1.294 1.293a6.5 6.5 0 004.219 1.849l1.837.262a.5.5 0 010 .98l-1.837.262a6.5 6.5 0 00-4.219 1.85l-1.294 1.292a.5.5 0 01-.712 0l-1.294-1.292a6.5 6.5 0 00-4.219-1.85l-1.837-.262a.5.5 0 010-.98l1.837-.262a6.5 6.5 0 004.219-1.85l1.294-1.293zm5.72 13.064a.5.5 0 01.712 0l.647.647a4.5 4.5 0 002.92.128l.918-.131a.5.5 0 010 .98l-.918.132a4.5 4.5 0 00-2.92.128l-.647.647a.5.5 0 01-.712 0l-.647-.647a4.5 4.5 0 00-2.92-.128l-.918-.132a.5.5 0 010-.98l.918.131a4.5 4.5 0 002.92-.128l.647-.647z" /></svg>
-                <section className="text-lg font-bold text-[#3C2366]">Ask FarEd AI</section>
+                <section className="text-lg font-bold text-[#083B4C]">Ask Taskmate AI</section>
               </div>
               <div className="flex-1 overflow-y-auto px-4 sm:px-10 lg:px-24 py-4 space-y-5 no-scrollbar z-10 flex flex-col">
                 <div className="mt-auto"></div>
